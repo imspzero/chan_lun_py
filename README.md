@@ -37,7 +37,7 @@ chan_lun_util.py joinquant上分笔使用的demo:
 
     len(k_line_list)
 
-    '''1.K线合并'''
+    '''1.K线合并,确定顶分型和底分型'''
     merge_line_list = find_peak_and_bottom(k_line_list, "down")
 
     '''2.分笔'''
@@ -47,6 +47,6 @@ chan_lun_util.py joinquant上分笔使用的demo:
 ```
 
 ------------------------------------------------
-其中：
-    1. fenbi_result为boolean，True的话就是分笔成功了；False就是分笔失败后面的final_result_array和fenbi_seq_list都不用看了。
+其中：<br/>
+    1. fenbi_result为boolean，True的话就是分笔成功了；False就是分笔失败后面的final_result_array和fenbi_seq_list都不用看了。
     2. final_result_array，fenbi_seq_list：如果final_result_array[i]为True，则对于merge_line_list来说，merge_line_list[fenbi_seq_list[i]]就为最终顶或者底对应的合并K线dto
