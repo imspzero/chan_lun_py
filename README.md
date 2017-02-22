@@ -48,5 +48,5 @@ chan_lun_util.py joinquant上分笔使用的demo:
 
 ------------------------------------------------
 其中：<br/>
-    1. fenbi_result为boolean，True的话就是分笔成功了；False就是分笔失败后面的final_result_array和fenbi_seq_list都不用看了。
-    2. final_result_array，fenbi_seq_list：如果final_result_array[i]为True，则对于merge_line_list来说，merge_line_list[fenbi_seq_list[i]]就为最终顶或者底对应的合并K线dto
+    1. fenbi_result为boolean，True的话就是分笔成功了；False就是分笔失败后面的final_result_array和fenbi_seq_list都不用看了。<br/>
+    2. final_result_array，fenbi_seq_list：如果final_result_array[i]为True，则对于merge_line_list来说，merge_line_list[fenbi_seq_list[i]]就为最终顶或者底对应的合并K线dto <br/>
