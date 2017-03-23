@@ -130,10 +130,14 @@ def find_peak_and_bottom(k_line_list, begin_trend):  # []KLineDTO
     #  寻找真正的顶和底
     #  []KLineDTO, string
     k_line_dto = k_line_list[0]
-
+    
+    # init for the first mergeLine
     merge_line_dto = MergeLineDTO(1, k_line_dto.begin_time, k_line_dto.end_time,
                                   k_line_dto.high, k_line_dto.low, 'N', 'N')
-
+    merge_line_dto.member_list = []
+    merge_line_dto.member_list.append(k_line_dto)
+    
+    # new merge_line_list, and this is the return result
     merge_line_list = [merge_line_dto]
     trend = begin_trend
 
