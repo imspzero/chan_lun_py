@@ -353,7 +353,7 @@ def validate_peak_and_bottom(merge_line_list, start_index, end_index):
 
     #  1.不满足顶必须接着底、或底必须接着顶
     if start_index == 0:
-        if end_m_line_dto.is_peak == 'N' and end_m_line_dto.is_bottom != 'N':
+        if end_m_line_dto.is_peak != 'N' and end_m_line_dto.is_bottom != 'N':
             return False
     elif (start_m_line_dto.is_peak == 'Y' and end_m_line_dto.is_peak == 'Y') \
             or (start_m_line_dto.is_bottom == 'Y' and end_m_line_dto.is_bottom == 'Y'):
