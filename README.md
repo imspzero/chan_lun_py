@@ -1,6 +1,6 @@
 # chan_lun_util_py
 A personal implement of Zen theory in Python, which is popular among Chinese stock investors. Just for fun. 
-
+For more detail: https://www.joinquant.com/post/4739
 
 chan_lun_util.py 在joinquant上使用分笔功能的demo:
 
