@@ -1,5 +1,5 @@
 # chan_lun_util_py
-A personal implement of Zen theory in Python, which is popular among Chinese stock investors. Just for fun. 
+A personal implement of Chan-Lun in Python, which is popular among Chinese stock investors. Just for fun. 
 
 For more detail: https://www.joinquant.com/post/4739
 
