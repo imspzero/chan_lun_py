@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+
 # from merge_line_dto import MergeLineDTO
 # from k_line_dto import KLineDTO
 # from sql_lite_util import *
-__author__ = 'SUM'
+__author__ = 'imspzero'
+
 
 # K线DTO
 class KLineDTO(object):
-
     day = datetime.now()
     begin_time = datetime.now()
     end_time = datetime.now()
@@ -27,14 +28,14 @@ class KLineDTO(object):
 
     def __str__(self):
         return "(" + self.day.strftime('%Y-%m-%d %H:%M:%S') + ", " \
-               + self.begin_time.strftime('%Y-%m-%d %H:%M:%S') + ", " \
-               + self.end_time.strftime('%Y-%m-%d %H:%M:%S') + ")"
-            
+            + self.begin_time.strftime('%Y-%m-%d %H:%M:%S') + ", " \
+            + self.end_time.strftime('%Y-%m-%d %H:%M:%S') + ")"
+
+
 # --------------------------------
-            
+
 # 合并后的K线DTO            
 class MergeLineDTO(object):
-
     memberList = []
     stick_num = 0
     begin_time = datetime.now()
@@ -56,10 +57,11 @@ class MergeLineDTO(object):
 
     def __str__(self):
         return "(" + self.begin_time.strftime('%Y-%m-%d %H:%M:%S') + ", " \
-               + self.end_time.strftime('%Y-%m-%d %H:%M:%S') + ")"
+            + self.end_time.strftime('%Y-%m-%d %H:%M:%S') + ")"
+
 
 # --------------------------------
-        
+
 def set_peak_and_bottom_flag(merge_line_list):
     #  标记顶和底
     #  []MergeLineDTO
@@ -70,10 +72,10 @@ def set_peak_and_bottom_flag(merge_line_list):
     #  顶和底,暂不考虑是否公用k线
 
     i = 1
-    while i < len(merge_line_list)-1:
-        first_dto = merge_line_list[i-1]
+    while i < len(merge_line_list) - 1:
+        first_dto = merge_line_list[i - 1]
         middle_dto = merge_line_list[i]
-        last_dto = merge_line_list[i+1]
+        last_dto = merge_line_list[i + 1]
         if middle_dto.high > max(first_dto.high, last_dto.high) \
                 and middle_dto.low > max(first_dto.low, last_dto.low):
             middle_dto.is_peak = 'Y'
@@ -88,7 +90,7 @@ def set_peak_and_bottom_flag(merge_line_list):
 def is_inclusive(merge_line_dto, high_price, low_price):
     #  判断是否存在包含关系
     #  MergeLineDTO, float, float
-    if (merge_line_dto.high >= high_price and merge_line_dto.low <= low_price)\
+    if (merge_line_dto.high >= high_price and merge_line_dto.low <= low_price) \
             or (merge_line_dto.high <= high_price and merge_line_dto.low >= low_price):
         return True
     return False
@@ -130,13 +132,13 @@ def find_peak_and_bottom(k_line_list, begin_trend):  # []KLineDTO
     #  寻找真正的顶和底
     #  []KLineDTO, string
     k_line_dto = k_line_list[0]
-    
+
     # init for the first mergeLine
     merge_line_dto = MergeLineDTO(1, k_line_dto.begin_time, k_line_dto.end_time,
                                   k_line_dto.high, k_line_dto.low, 'N', 'N')
     merge_line_dto.member_list = []
     merge_line_dto.member_list.append(k_line_dto)
-    
+
     # new merge_line_list, and this is the return result
     merge_line_list = [merge_line_dto]
     trend = begin_trend
@@ -145,7 +147,7 @@ def find_peak_and_bottom(k_line_list, begin_trend):  # []KLineDTO
     while i < len(k_line_list):
 
         today_k_line_dto = k_line_list[i]
-        last_m_line_dto = merge_line_list[len(merge_line_list)-1]
+        last_m_line_dto = merge_line_list[len(merge_line_list) - 1]
         if is_inclusive(last_m_line_dto, today_k_line_dto.high, today_k_line_dto.low):
             #  假如存在包含关系,合并K线
             merge_k_line(last_m_line_dto, today_k_line_dto, trend)
@@ -226,7 +228,7 @@ def fen_bi(merge_line_list):
     #  3.根据上一步得到的结果，得出最后合理的分型
     result_array = [False] * len(point_index_list)
     has_result = False
-    index = len(point_index_list) -1
+    index = len(point_index_list) - 1
     while index > 0:
         for result in result_array:
             result = False
@@ -259,6 +261,7 @@ def fen_bi(merge_line_list):
                       "底[" + str(m_line_dto.low) + "][" + str(m_line_dto.high) + "]")
     return has_result, result_array, point_index_list
 
+
 def check_final_fen_bi(merge_line_list, point_index_list,
                        point_index_matrix, result_array, end_index):
     #  查看最终正确的笔划分
@@ -275,13 +278,13 @@ def search_final_fen_bi(merge_line_list, point_index_list,
     if index == end_index:
         return True
     else:
-        i = index+1
+        i = index + 1
         while i <= end_index:
             if point_index_matrix[index][i]:
                 result_array[index] = True
                 result_array[i] = True
                 if search_final_fen_bi(merge_line_list, point_index_list,
-                                       point_index_matrix,result_array,
+                                       point_index_matrix, result_array,
                                        i, end_index):
                     return True
                 else:
@@ -307,7 +310,7 @@ def process_by_distance(merge_line_list, point_index_list, point_index_matrix, d
     #  MergeLineDTO[], boolean[], boolean[][], integer
 
     index = 0
-    while index < len(point_index_list)-distance:
+    while index < len(point_index_list) - distance:
         check_result = check_2point_is_multi_line(merge_line_list,
                                                   point_index_list,
                                                   point_index_matrix,
@@ -422,6 +425,7 @@ def validate_peak_and_bottom(merge_line_list, start_index, end_index):
     #  5.不允许中间有其他的顶和底
     #  6.或许还需要判断顶底的区间是否不能重叠
     return True
+
 
 '''
 def run_test():
